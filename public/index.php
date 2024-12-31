@@ -1,9 +1,9 @@
 <?php
-require_once dirname(__DIR__) . '/config/database.php';
-require_once dirname(__DIR__) . '/config/functions.php';
-require_once dirname(__DIR__) . '/includes/crud_functions.php';
+require_once dirname(__DIR__) . '../config/database.php';
+// require_once dirname(__DIR__) . '/config/functions.php';
+// require_once dirname(__DIR__) . '/includes/crud_functions.php';
 
-// $mysqli = connect_db();
+$pdo = connect_db();
 // $articles = get_all_articles($mysqli);
 // $category_stats = get_category_stats($mysqli);
 // $top_users = get_top_users($mysqli);
@@ -12,23 +12,23 @@ require_once dirname(__DIR__) . '/includes/crud_functions.php';
 
 // Prepare data for the chart
 // $categories = $category_stats;
-$categoriesNames = [];
-$counts = [];
-// Define colors for the chart
-$colors = [
-    'rgb(78, 115, 223)',    // primary
-    'rgb(28, 200, 138)',    // success
-    'rgb(54, 185, 204)',    // info
-    'rgb(246, 194, 62)',    // warning
-    'rgb(231, 74, 59)',     // danger
-    'rgb(133, 135, 150)',   // secondary
-    'rgb(90, 92, 105)',     // dark
-    'rgb(244, 246, 249)'    // light
-];
-foreach ($categories as $stat) {
-    $categoriesNames[] = $stat['name'];
-    $counts[] = $stat['article_count'];
-}
+// $categoriesNames = [];
+// $counts = [];
+// // Define colors for the chart
+// $colors = [
+//     'rgb(78, 115, 223)',    // primary
+//     'rgb(28, 200, 138)',    // success
+//     'rgb(54, 185, 204)',    // info
+//     'rgb(246, 194, 62)',    // warning
+//     'rgb(231, 74, 59)',     // danger
+//     'rgb(133, 135, 150)',   // secondary
+//     'rgb(90, 92, 105)',     // dark
+//     'rgb(244, 246, 249)'    // light
+// ];
+// foreach ($categories as $stat) {
+//     $categoriesNames[] = $stat['name'];
+//     $counts[] = $stat['article_count'];
+// }
 
 
 

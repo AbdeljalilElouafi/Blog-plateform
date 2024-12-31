@@ -1,7 +1,7 @@
 <?php
 use Dotenv\Dotenv;
 
-require '../vendor/autoload.php'; // Composer autoloader 
+require '../vendor1/autoload.php'; // Composer autoloader 
 // Make sure to give the correct path to the autoloader file.
 
 // Load .env file from the root of your project
@@ -22,15 +22,14 @@ function connect_db() {
         $dsn = 'mysql:host=' . $_ENV['HOST'] . ';dbname=' . $_ENV['DATABASE'] . ';charset=utf8';
         $username = $_ENV['USERNAME'];
         $password = $_ENV['PASSWORD'];
-
+        
         // Create a PDO instance and set error mode to exception
         $pdo = new PDO($dsn, $username, $password, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ]);
-
+        
         return $pdo;
-
     } catch (PDOException $e) {
         // Log the error and terminate if the connection fails
         error_log("Connection failed: " . $e->getMessage());
