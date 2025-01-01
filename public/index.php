@@ -1,9 +1,19 @@
 <?php
 require_once dirname(__DIR__) . '../config/database.php';
+require_once '../src/Model/Category.php';
+require_once '../src/Model/Tag.php'; 
+require_once '../src/Model/User.php';
 // require_once dirname(__DIR__) . '/config/functions.php';
 // require_once dirname(__DIR__) . '/includes/crud_functions.php';
 
-$pdo = connect_db();
+$db = new DatabaseConnection();
+$pdo = $db->getPdo();
+
+
+$category = new Category($pdo);
+$tag = new Tag($pdo);
+
+
 // $articles = get_all_articles($mysqli);
 // $category_stats = get_category_stats($mysqli);
 // $top_users = get_top_users($mysqli);
@@ -53,7 +63,7 @@ $pdo = connect_db();
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../src/css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
@@ -85,7 +95,7 @@ $pdo = connect_db();
                     <div class="row">
 
                         <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <!-- <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -100,7 +110,7 @@ $pdo = connect_db();
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
@@ -128,7 +138,11 @@ $pdo = connect_db();
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tags
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= getTableCount($mysqli, 'tags') ?></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php 
+                                                 $tag = new Tag($pdo);
+                                                 echo $tag->displayTags(); 
+                                                 ?>
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-tags fa-2x text-gray-300"></i>
@@ -145,7 +159,7 @@ $pdo = connect_db();
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Categories</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= getTableCount($mysqli, 'categories') ?></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php $category->displayCategories(); ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-folder fa-2x text-gray-300"></i>
@@ -445,7 +459,7 @@ $pdo = connect_db();
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
         <!-- Initialize the pie chart -->
-        <script>
+<script>
     // Set new default font family and font color to mimic Bootstrap's default styling
     Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
     Chart.defaults.global.defaultFontColor = '#858796';
@@ -492,14 +506,14 @@ $pdo = connect_db();
             cutoutPercentage: 80,
         },
     });
-    </script>
+</script>
 
     <!-- Page level plugins -->
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
+    <script src="../src/js/demo/datatables-demo.js"></script>
 </body>
 
 </html>
