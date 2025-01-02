@@ -14,7 +14,7 @@ class Tag {
             $stmt = $this->pdo->query("SELECT * FROM tags");
             if ($stmt->rowCount() > 0) {
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo "Tag ID: " . $row["id"] . ", Name: " . $row["name"] . "<br>";
+                    echo "Tag: " . " " . $row["name"] . "<br>";
                 }
             } else {
                 echo "No tags found";

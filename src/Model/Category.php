@@ -10,11 +10,11 @@ class Category {
     }
 
     public function displayCategories() {
-        try {
+        try {    
             $stmt = $this->pdo->query("SELECT * FROM categories");
             if ($stmt->rowCount() > 0) {
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo "Category ID: " . $row["id"] . ", Name: " . $row["name"] . "<br>";
+                    echo "Category: " . " " . $row["name"] . "<br>";
                 }
             } else {
                 echo "No categories found";

@@ -39,7 +39,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Article Management:</h6>
                         <a class="collapse-item" href="articles.php">View All Articles</a>
-                        <a class="collapse-item" href="add-article.php">Add New Article</a>
+                        <a class="collapse-item" href="../src/pages/add-article.php">Add New Article</a>
                         <a class="collapse-item" href="article-drafts.php">Drafts</a>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Category Management:</h6>
                         <a class="collapse-item" href="categories.php">View All Categories</a>
-                        <a class="collapse-item" href="add-category.php">Add New Category</a>
+                        <a class="collapse-item" href="../src/pages/add-category.php">Add New Category</a>
                     </div>
                 </div>
             </li>
@@ -72,7 +72,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Tag Management:</h6>
                         <a class="collapse-item" href="tags.php">View All Tags</a>
-                        <a class="collapse-item" href="add-tag.php">Add New Tag</a>
+                        <a class="collapse-item" href="../src/pages/add-tag.php">Add New Tag</a>
                     </div>
                 </div>
             </li>
