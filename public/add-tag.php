@@ -1,3 +1,28 @@
+<?php
+
+require_once dirname(__DIR__) . '../config/database.php';
+require_once '../src/Model/Tag.php';
+
+$db = new DatabaseConnection();
+$pdo = $db->getPdo();
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get the form data
+    $name = $_POST['title'];
+
+    // Assuming $pdo is your database connection
+    $tag = new Tag($pdo);
+
+    // Call the createTag method to add the new tag to the database
+    $tag->addTag($name);
+}
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +36,7 @@
     <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-lg">
         <h1 class="text-2xl font-semibold text-gray-800 mb-6">Add New Tag</h1>
 
-        <form action="/submit_article" method="POST" enctype="multipart/form-data">
+        <form action="add-tag.php" method="POST" enctype="multipart/form-data">
             <!-- Title -->
             <div class="mb-4">
                 <label for="title" class="block text-sm font-medium text-gray-700">Tag name</label>
