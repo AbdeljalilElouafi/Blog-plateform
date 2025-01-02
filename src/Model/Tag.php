@@ -15,12 +15,11 @@ class Tag {
             $stmt = $this->pdo->query("SELECT * FROM tags");
             if ($stmt->rowCount() > 0) {
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo "Tag: " . " " . $row["name"] . "<br>";
-
-                    echo "<a href='edit-tag.php?tag_id=" . $row['id'] . "' class='mt-10 flex w-10 items-center justify-center rounded-md border border-transparent bg-green-600 px-8 py-3 text-base font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2'>Edit</a>";
-
-                    echo "<a href='delete-tag.php?tag_id=" . $row['id'] . "' class='mt-10 flex w-10 items-center justify-center rounded-md border border-transparent bg-red-600 px-8 py-3 text-base font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2'>Delete</a>";
-
+                    echo "<div class='flex items-center gap-2'>";
+                    echo "<span>Tag: " . $row["name"] . "</span>";
+                    echo "<a href='edit-tag.php?tag_id=" . $row['id'] . "' class='flex items-center justify-center rounded-md border border-transparent bg-green-600 px-1 py-1 text-base font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2'>Edit</a>";
+                    echo "<a href='delete-tag.php?tag_id=" . $row['id'] . "' class='flex items-center justify-center rounded-md border border-transparent bg-red-600 px-1 py-1 text-base font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2'>Delete</a>";
+                    echo "</div>";
 
 
                 }
