@@ -1,3 +1,28 @@
+<?php
+
+require_once dirname(__DIR__) . '../config/database.php';
+require_once '../src/Model/Tag.php';
+
+$db = new DatabaseConnection();
+$pdo = $db->getPdo();
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $name = $_POST['name']; 
+    $tag = new Tag($pdo);
+
+    $tag->addTag($name);
+}
+
+
+?>
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

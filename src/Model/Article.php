@@ -77,7 +77,6 @@ class Article {
         }
     }
 
-    
 
 
     public function displayArticles() {
@@ -108,6 +107,37 @@ class Article {
         } catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
+    }
+
+
+    public function addArticle($data) {
+        
+        if (!isset($data['slug'])) {
+            $data['slug'] = $this->generateSlug($data['title']);
+        }
+        
+        
+        if (!isset($data['status'])) {
+            $data['status'] = 'draft';
+        }
+        
+        $this->insertRecord('articles', $data);
+    }
+    
+
+    public function editArticle($id, $data) {
+        
+        if (isset($data['title']) && !isset($data['slug'])) {
+            $data['slug'] = $this->generateSlug($data['title']);
+        }
+        
+        $this->updateRecord('articles', $data, $id);
+    }
+    
+    
+
+    public function removeArticle($id) {
+        $this->deleteRecord('articles', $id);
     }
 
 

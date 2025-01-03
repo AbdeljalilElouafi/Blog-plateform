@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1 class="text-2xl font-semibold text-gray-800 mb-6">Add New Tag</h1>
 
         <form action="add-tag.php" method="POST" enctype="multipart/form-data">
-            <!-- Title 
+            <!-- Title -->
 
             <div class="mb-4">
                 <label for="title" class="block text-sm font-medium text-gray-700">Tag name</label>
