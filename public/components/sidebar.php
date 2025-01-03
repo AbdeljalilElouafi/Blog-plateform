@@ -56,7 +56,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Category Management:</h6>
                         <a class="collapse-item" href="categories.php">View All Categories</a>
-                        <a class="collapse-item" href="../src/pages/add-category.php">Add New Category</a>
+                        <a class="collapse-item" href="../public/add-category.php">Add New Category</a>
                     </div>
                 </div>
             </li>
