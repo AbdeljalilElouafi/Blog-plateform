@@ -70,4 +70,4 @@ Le projet consiste à mettre en place une plateforme collaborative où les déve
 
 1. **Clonez le Repository :**
    ```bash
-   git clone https://github.com/username/devto-content-management.git
+   git clone (https://github.com/AbdeljalilElouafi/Blog-plateform.git)
