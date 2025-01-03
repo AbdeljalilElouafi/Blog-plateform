@@ -2,6 +2,7 @@
 require_once dirname(__DIR__) . '../config/database.php';
 require_once '../src/Model/Category.php';
 require_once '../src/Model/Tag.php'; 
+require_once '../src/Model/Article.php'; 
 // require_once '../src/Model/User.php';
 // require_once dirname(__DIR__) . '/config/functions.php';
 // require_once dirname(__DIR__) . '/includes/crud_functions.php';
@@ -12,6 +13,7 @@ $pdo = $db->getPdo();
 
 $category = new Category($pdo);
 $tag = new Tag($pdo);
+$article = new Article($pdo);
 
 
 // $articles = get_all_articles($mysqli);
@@ -104,7 +106,7 @@ $tag = new Tag($pdo);
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Articles</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">phpCode</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php $article->displayArticles(); ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-newspaper fa-2x text-gray-300"></i>
