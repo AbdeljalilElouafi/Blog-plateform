@@ -112,9 +112,9 @@ class Article {
 
     public function addArticle($data) {
         
-        if (!isset($data['slug'])) {
-            $data['slug'] = $this->generateSlug($data['title']);
-        }
+        // if (!isset($data['slug'])) {
+        //     $data['slug'] = $this->generateSlug($data['title']);
+        // }
         
         
         if (!isset($data['status'])) {
@@ -134,7 +134,7 @@ class Article {
         $this->updateRecord('articles', $data, $id);
     }
     
-    
+
 
     public function removeArticle($id) {
         $this->deleteRecord('articles', $id);
