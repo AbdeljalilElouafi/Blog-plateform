@@ -81,10 +81,10 @@ class Article {
 
     public function displayArticles() {
         try {
-            $stmt = $this->pdo->query("SELECT a.*, c.name as category_name, u.username as author_name 
-                                     FROM articles a 
-                                     LEFT JOIN categories c ON a.category_id = c.id 
-                                     LEFT JOIN users u ON a.author_id = u.id");
+            $stmt = $this->pdo->query("SELECT articles.*, categories.name as category_name, users.username as author_name 
+                                     FROM articles  
+                                     LEFT JOIN categories ON articles.category_id = categories.id 
+                                     LEFT JOIN users ON articles.author_id = users.id");
             if ($stmt->rowCount() > 0) {
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo "<div class='flex items-center gap-2 mb-4'>";
@@ -112,9 +112,9 @@ class Article {
 
     public function addArticle($data) {
         
-        // if (!isset($data['slug'])) {
-        //     $data['slug'] = $this->generateSlug($data['title']);
-        // }
+        if (!isset($data['slug'])) {
+            $data['slug'] = $this->generateSlug($data['title']);
+        }
         
         
         if (!isset($data['status'])) {
@@ -140,6 +140,83 @@ class Article {
         $this->deleteRecord('articles', $id);
     }
 
+    public function changeStatus($articleId, $newStatus, $scheduledDate = null) {
+        try {
+            $data = ['status' => $newStatus];
+            if ($newStatus === 'scheduled') {
+                if (!$scheduledDate) {
+                    throw new Exception("Scheduled date is required for scheduled status");
+                }
+                $data['scheduled_date'] = $scheduledDate;
+            }
+            $this->updateRecord('articles', $data, $articleId);
+        } catch(Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+    
+    
+    public function setCategory($articleId, $categoryId) {
+        $data = ['category_id' => $categoryId];
+        $this->updateRecord('articles', $data, $articleId);
+    }
+    
+    
+    public function addTag($articleId, $tagId) {
+        $data = [
+            'article_id' => $articleId,
+            'tag_id' => $tagId
+        ];
+        $this->insertRecord('article_tags', $data);
+    }
+    
+    public function removeTag($articleId, $tagId) {
+        try {
+            $sql = "DELETE FROM article_tags WHERE article_id = ? AND tag_id = ?";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$articleId, $tagId]);
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+    
+    
+    private function generateSlug($title) {
+        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title)));
+        $baseSlug = $slug;
+        $counter = 1;
+        
+        // while ($this->slugExists($slug)) {
+        //     $slug = $baseSlug . '-' . $counter;
+        //     $counter++;
+        // }
+        
+        return $slug;
+    }
+    
+    
+    public function displayArticleTags($articleId) {
+        try {
+            $sql = "SELECT t.* FROM tags t 
+                    JOIN article_tags at ON t.id = at.tag_id 
+                    WHERE at.article_id = ?";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$articleId]);
+            $tags = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            if (!empty($tags)) {
+                echo "<div class='flex flex-wrap gap-2 mt-2'>";
+                foreach ($tags as $tag) {
+                    echo "<span class='px-2 py-1 bg-gray-200 rounded-full text-sm'>" . 
+                         htmlspecialchars($tag['name']) . "</span>";
+                }
+                echo "</div>";
+            }
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+    
 
 }
 ?>
