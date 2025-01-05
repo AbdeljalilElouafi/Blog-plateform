@@ -16,8 +16,10 @@ class Category {
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo "<div class='flex items-center gap-2'>";
                     echo "<span>Category: " . $row["name"] . "</span>";
-                    echo "<a href='edit-category.php?Category_id=" . $row['id'] . "' class='flex items-center justify-center rounded-md border border-transparent bg-green-600 px-1 py-1 text-base font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2'>Edit</a>";
-                    echo "<a href='delete-category.php?Category_id=" . $row['id'] . "' class='flex items-center justify-center rounded-md border border-transparent bg-red-600 px-1 py-1 text-base font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2'>Delete</a>";
+                    echo "<div class='mt-3'>"; 
+                    echo "<a href='edit-category.php?Category_id=" . $row['id'] . "' class='btn btn-success btn-sm me-2'>Edit</a>";
+                    echo "<a href='delete-category.php?Category_id=" . $row['id'] . "' class='btn btn-danger btn-sm'>Delete</a>";
+                    echo "</div>"; 
                     echo "</div>";
                 }
             } else {

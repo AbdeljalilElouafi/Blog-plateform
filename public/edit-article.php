@@ -6,7 +6,7 @@ $db = new DatabaseConnection();
 $pdo = $db->getPdo();
 $article = new Article($pdo);
 
-// Get article ID from URL
+// to get the article id from the url
 $article_id = isset($_GET['article_id']) ? (int)$_GET['article_id'] : 0;
 
 // to get the article data to the form
@@ -25,6 +25,15 @@ try {
 }
 
 
+try {
+    $stmt = $pdo->prepare("SELECT tag_id FROM article_tags WHERE article_id = ?");
+    $stmt->execute([$article_id]);
+    $currentTags = $stmt->fetchAll(PDO::FETCH_COLUMN);
+} catch(PDOException $e) {
+    $currentTags = [];
+    $error = "Error fetching article tags: " . $e->getMessage();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $updateData = [
         'title' => $_POST['title'],
@@ -33,14 +42,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'updated_at' => date('Y-m-d H:i:s')
     ];
 
-
     try {
+        
         $article->editArticle($article_id, $updateData);
+    
+        
+        $stmt = $pdo->prepare("DELETE FROM article_tags WHERE article_id = ?");
+        $stmt->execute([$article_id]);
+    
+        
+        if (isset($_POST['tag_id']) && is_array($_POST['tag_id'])) {
+            foreach ($_POST['tag_id'] as $tagId) {
+                $article->addTag($article_id, $tagId);
+            }
+        }
+    
+        
         // header('Location: index.php?success=Article updated successfully');
         // exit;
+    
     } catch (Exception $e) {
+        
         $error = "Error updating article: " . $e->getMessage();
     }
+    
 }
 
 try {
@@ -114,19 +139,24 @@ try {
                 </select>
             </div>
 
-            <!-- Tags -->
-            <div class="mb-4">
-                                <label for="tags" class="block text-sm font-medium text-gray-700">Tags</label>
-                                <div id="tags" class="space-y-2">
-                                    <?php foreach ($tags as $tag): ?>
-                                        <div class="flex items-center">
-                                            <input type="checkbox" id="tag_<?php echo $tag['id']; ?>" name="tag_id[]" value="<?php echo $tag['id']; ?>"
-                                                <?php echo (isset($_POST['tag_id']) && in_array($tag['id'], $_POST['tag_id'])) ? 'checked' : ''; ?>>
-                                            <label for="tag_<?php echo $tag['id']; ?>" class="ml-2"><?php echo htmlspecialchars($tag['name']); ?></label>
-                                        </div>
-                                    <?php endforeach; ?>
+                 <!-- Tags -->
+                    <div class="mb-4">
+                        <label for="tags" class="block text-sm font-medium text-gray-700">Tags</label>
+                        <div id="tags" class="space-y-2">
+                            <?php foreach ($tags as $tag): ?>
+                                <div class="flex items-center">
+                                    <input type="checkbox" 
+                                        id="tag_<?php echo $tag['id']; ?>" 
+                                        name="tag_id[]" 
+                                        value="<?php echo $tag['id']; ?>"
+                                        <?php echo (in_array($tag['id'], $currentTags)) ? 'checked' : ''; ?>>
+                                    <label for="tag_<?php echo $tag['id']; ?>" class="ml-2">
+                                        <?php echo htmlspecialchars($tag['name']); ?>
+                                    </label>
                                 </div>
-                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
 
 
             <!-- Status -->
