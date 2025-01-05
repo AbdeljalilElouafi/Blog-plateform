@@ -23,7 +23,7 @@ class DatabaseConnection
     private function __clone() {}
 
     // private method to prevent another initialisation of the instance
-    private function __wakeup() {}
+    public function __wakeup() {}
 
     // method to get the unique instance
     public static function getInstance()
