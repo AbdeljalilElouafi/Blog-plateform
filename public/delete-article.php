@@ -3,7 +3,7 @@
 require_once dirname(__DIR__) . '../config/database.php';
 require_once '../src/Model/Article.php';
 
-$db = new DatabaseConnection();
+$db =  DatabaseConnection::getInstance();
 $pdo = $db->getPdo();
 
 if (isset($_GET['article_id'])) {

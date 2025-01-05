@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__DIR__) . '../config/database.php';
 require_once '../src/Model/Article.php';
-$db = new DatabaseConnection();
+$db = DatabaseConnection::getInstance();
 $pdo = $db->getPdo();
 $article = new Article($pdo);
 

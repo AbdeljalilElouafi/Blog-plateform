@@ -3,11 +3,9 @@ require_once dirname(__DIR__) . '../config/database.php';
 require_once '../src/Model/Category.php';
 require_once '../src/Model/Tag.php'; 
 require_once '../src/Model/Article.php'; 
-// require_once '../src/Model/User.php';
-// require_once dirname(__DIR__) . '/config/functions.php';
-// require_once dirname(__DIR__) . '/includes/crud_functions.php';
 
-$db = new DatabaseConnection();
+
+$db = DatabaseConnection::getInstance();
 $pdo = $db->getPdo();
 
 
