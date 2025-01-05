@@ -87,19 +87,19 @@ class Article {
                                      LEFT JOIN users ON articles.author_id = users.id");
             if ($stmt->rowCount() > 0) {
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<div class='flex items-center gap-2 mb-4'>";
-                    echo "<div class='flex-grow'>";
-                    echo "<h3 class='font-bold'>" . htmlspecialchars($row["title"]) . "</h3>";
-                    echo "<p class='text-sm'>Category: " . htmlspecialchars($row["category_name"]) . 
-                         " | Author: " . htmlspecialchars($row["author_name"]) . 
+                    echo "<div class='card mb-3'>"; 
+                    echo "<div class='card-body'>"; 
+                    echo "<h3 class='card-title fw-bold'>" . htmlspecialchars($row["title"]) . "</h3>";
+                    echo "<p class='card-text text-muted small'>Category: " . htmlspecialchars($row["category_name"]) .
+                         " | Author: " . htmlspecialchars($row["author_name"]) .
                          " | Status: " . htmlspecialchars($row["status"]) . "</p>";
-                    echo "</div>";
-                    echo "<a href='edit-article.php?article_id=" . $row['id'] . "' class='flex items-center justify-center rounded-md border border-transparent bg-green-600 px-1 py-1 text-base font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2'>Edit</a>";
-                    echo "<a href='delete-article.php?article_id=" . $row['id'] . "' class='flex items-center justify-center rounded-md border border-transparent bg-red-600 px-1 py-1 text-base font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2'>Delete</a>";
-                    echo "</div>";
-                    
-                    
-                    // $this->displayArticleTags($row['id']);
+                    $this->displayArticleTags($row['id']);
+                    echo "<div class='mt-3'>"; 
+                    echo "<a href='edit-article.php?article_id=" . $row['id'] . "' class='btn btn-success btn-sm me-2'>Edit</a>";
+                    echo "<a href='delete-article.php?article_id=" . $row['id'] . "' class='btn btn-danger btn-sm'>Delete</a>";
+                    echo "</div>"; 
+                    echo "</div>"; 
+                    echo "</div>"; 
                 }
             } else {
                 echo "No articles found";
@@ -205,9 +205,9 @@ class Article {
             $tags = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
             if (!empty($tags)) {
-                echo "<div class='flex flex-wrap gap-2 mt-2'>";
+                echo "<div class='d-flex flex-wrap gap-2 mt-2'>";
                 foreach ($tags as $tag) {
-                    echo "<span class='px-2 py-1 bg-gray-200 rounded-full text-sm'>" . 
+                    echo "<span class='badge bg-primary rounded-pill'>" .
                          htmlspecialchars($tag['name']) . "</span>";
                 }
                 echo "</div>";
