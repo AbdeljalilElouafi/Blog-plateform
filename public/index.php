@@ -12,6 +12,7 @@ $pdo = $db->getPdo();
 $category = new Category($pdo);
 $tag = new Tag($pdo);
 $article = new Article($pdo);
+$top_articles = $article->getTopArticles(5);
 
 
 // $articles = get_all_articles($mysqli);
@@ -104,7 +105,7 @@ $article = new Article($pdo);
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Articles</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php $article->displayArticles(); ?></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-newspaper fa-2x text-gray-300"></i>
@@ -320,86 +321,18 @@ $article = new Article($pdo);
                     </div>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Recent Articles</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Title</th>
-                                            <th>Author</th>
-                                            <th>Category</th>
-                                            <th>Tags</th>
-                                            <th>Views</th>
-                                            <th>Created At</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Title</th>
-                                            <th>Author</th>
-                                            <th>Category</th>
-                                            <th>Tags</th>
-                                            <th>Views</th>
-                                            <th>Created At</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    <?php foreach($articles as $article): ?>
-                                        <tr>
-                                            <td>
-                                                <img src="<?= htmlspecialchars($article['featured_image']) ?>" 
-                                                    alt="Thumbnail" 
-                                                    class="img-thumbnail mr-2" 
-                                                    style="width: 50px; height: 50px; object-fit: cover;">
-                                                <?= htmlspecialchars($article['title']) ?>
-                                            </td>
-                                            <td><?= htmlspecialchars($article['username']) ?></td>
-                                            <td><?= htmlspecialchars($article['name']) ?></td>
-                                            <td>
-                                                <?php
-                                                if ($article['tag_name']) {
-                                                    $tags = explode(',', $article['tag_name']);
-                                                    foreach($tags as $tag) {
-                                                        echo '<span class="badge badge-primary mr-1">' . htmlspecialchars($tag) . '</span>';
-                                                    }
-                                                }
-                                                ?>
-                                            </td>
-                                            <td data-order="<?= $article['views'] ?>">
-                                                <?= number_format($article['views']) ?>
-                                            </td>
-                                            <td data-order="<?= strtotime($article['created_at']) ?>">
-                                                <?= date('M d, Y H:i', strtotime($article['created_at'])) ?>
-                                            </td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <a href="view-article.php?id=<?= $article['id'] ?>" 
-                                                    class="btn btn-info btn-sm">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                    <a href="edit-article.php?id=<?= $article['id'] ?>" 
-                                                    class="btn btn-primary btn-sm">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                    <button type="button" 
-                                                            class="btn btn-danger btn-sm delete-article" 
-                                                            data-id="<?= $article['id'] ?>">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Recent Articles</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <?php 
+            $articleObj = new Article($pdo);
+            $articleObj->displayArticles(); 
+            ?>
+        </div>
+    </div>
+</div>
 
                 </div>
                 <!-- /.container-fluid -->
