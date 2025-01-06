@@ -59,80 +59,229 @@ try {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Article</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>DevBlog - Dashboard</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="../src/css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+
+
 </head>
 
-<body class="bg-gray-100 p-8">
-    <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-        <h1 class="text-2xl font-semibold text-gray-800 mb-6">Add New Article</h1>
+<body id="page-top">   
 
-        <?php if (isset($error)): ?>
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                <?php echo htmlspecialchars($error); ?>
-            </div>
-        <?php endif; ?>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
 
-        <form action="add-article.php" method="POST" enctype="multipart/form-data">
-            <!-- Title -->
-            <div class="mb-4">
-                <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
-                <input type="text" id="title" name="title" 
-                    value="<?php echo isset($_POST['title']) ? htmlspecialchars($_POST['title']) : ''; ?>"
-                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
-                    required>
-            </div>
+        <?php include 'components/sidebar.php'; ?>
 
-            <!-- Content -->
-            <div class="mb-4">
-                <label for="content" class="block text-sm font-medium text-gray-700">Content</label>
-                <textarea id="content" name="content" rows="6" 
-                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
-                    required><?php echo isset($_POST['content']) ? htmlspecialchars($_POST['content']) : ''; ?></textarea>
-            </div>
 
-            <!-- Category -->
-            <div class="mb-4">
-                <label for="category_id" class="block text-sm font-medium text-gray-700">Category</label>
-                <select id="category_id" name="category_id" 
-                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
-                    required>
-                    <option value="">Select Category</option>
-                    <?php foreach ($categories as $category): ?>
-                        <option value="<?php echo $category['id']; ?>" 
-                            <?php echo (isset($_POST['category_id']) && $_POST['category_id'] == $category['id']) ? 'selected' : ''; ?>>
-                            <?php echo htmlspecialchars($category['name']); ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
 
-                        <!-- Tags -->
-                        <div class="mb-4">
-                                <label for="tags" class="block text-sm font-medium text-gray-700">Tags</label>
-                                <div id="tags" class="space-y-2">
-                                    <?php foreach ($tags as $tag): ?>
-                                        <div class="flex items-center">
-                                            <input type="checkbox" id="tag_<?php echo $tag['id']; ?>" name="tag_id[]" value="<?php echo $tag['id']; ?>"
-                                                <?php echo (isset($_POST['tag_id']) && in_array($tag['id'], $_POST['tag_id'])) ? 'checked' : ''; ?>>
-                                            <label for="tag_<?php echo $tag['id']; ?>" class="ml-2"><?php echo htmlspecialchars($tag['name']); ?></label>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
+            <!-- Main Content -->
+            <div id="content">
+
+                <?php include 'components/topbar.php'; ?>
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                    </div>
+
+                    <!-- -------------the form starts here:------------- -->
+                    <div class="container">
+    <div class="card mt-4 mb-4">
+        <div class="card-body">
+            <h1 class="card-title h3 mb-4">Add New Article</h1>
+
+            <?php if (isset($error)): ?>
+                <div class="alert alert-danger" role="alert">
+                    <?php echo htmlspecialchars($error); ?>
+                </div>
+            <?php endif; ?>
+
+            <form action="add-article.php" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name="title" 
+                        value="<?php echo isset($_POST['title']) ? htmlspecialchars($_POST['title']) : ''; ?>" 
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="content" class="form-label">Content</label>
+                    <textarea class="form-control" id="content" name="content" rows="6" 
+                        required><?php echo isset($_POST['content']) ? htmlspecialchars($_POST['content']) : ''; ?></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="category_id" class="form-label">Category</label>
+                    <select class="form-select" id="category_id" name="category_id" required>
+                        <option value="">Select Category</option>
+                        <?php foreach ($categories as $category): ?>
+                            <option value="<?php echo $category['id']; ?>" 
+                                <?php echo (isset($_POST['category_id']) && $_POST['category_id'] == $category['id']) ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($category['name']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Tags</label>
+                    <div class="form-check">
+                        <?php foreach ($tags as $tag): ?>
+                            <div class="mb-2">
+                                <input class="form-check-input" type="checkbox" 
+                                    id="tag_<?php echo $tag['id']; ?>" 
+                                    name="tag_id[]" 
+                                    value="<?php echo $tag['id']; ?>"
+                                    <?php echo (isset($_POST['tag_id']) && in_array($tag['id'], $_POST['tag_id'])) ? 'checked' : ''; ?>>
+                                <label class="form-check-label" for="tag_<?php echo $tag['id']; ?>">
+                                    <?php echo htmlspecialchars($tag['name']); ?>
+                                </label>
                             </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
 
-
-
-
-
-            <div class="flex items-center justify-between mt-6">
-                <button type="submit" class="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">Add Article</button>
-                <a href="index.php" class="px-6 py-2 bg-gray-500 text-white font-semibold rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">Cancel</a>
-            </div>
-        </form>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Add Article</button>
+                    <a href="index.php" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
     </div>
+</div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <?php include 'components/footer.php'; ?>
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.php">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+        <!-- Initialize the pie chart -->
+   <script>
+    // Set new default font family and font color to mimic Bootstrap's default styling
+    Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+    Chart.defaults.global.defaultFontColor = '#858796';
+
+    // Pie Chart
+    var ctx = document.getElementById("categoryPieChart");
+    var categoryPieChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: <?= json_encode($categories) ?>,
+            datasets: [{
+                data: <?= json_encode($counts) ?>,
+                backgroundColor: <?= json_encode(array_slice($colors, 0, count($categories))) ?>,
+                hoverBackgroundColor: <?= json_encode(array_slice($colors, 0, count($categories))) ?>,
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                        var total = dataset.data.reduce(function(previousValue, currentValue) {
+                            return previousValue + currentValue;
+                        });
+                        var currentValue = dataset.data[tooltipItem.index];
+                        var percentage = Math.floor(((currentValue/total) * 100)+0.5);
+                        return data.labels[tooltipItem.index] + ': ' + currentValue + ' (' + percentage + '%)';
+                    }
+                }
+            },
+            legend: {
+                display: false
+            },
+            cutoutPercentage: 80,
+        },
+    });
+   </script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="../src/js/demo/datatables-demo.js"></script>
 </body>
-</html>

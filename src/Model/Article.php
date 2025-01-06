@@ -1,6 +1,9 @@
 <?php
 
-class Article {
+require_once 'Crud.php';
+
+
+class Article extends Crud {
     public $id;
     public $title;
     public $slug;
@@ -15,66 +18,6 @@ class Article {
     public $created_at;
     public $updated_at;
     public $views;
-    private $pdo;
-
-    public function __construct($pdo) {
-        $this->pdo = $pdo;
-    }
-
-    
-    public function insertRecord($table, $data) {
-        try {
-            $columns = implode(',', array_keys($data));
-            $values = implode(',', array_fill(0, count($data), '?'));
-
-            $sql = "INSERT INTO $table ($columns) VALUES ($values)";
-            $stmt = $this->pdo->prepare($sql);
-
-            $params = array_values($data);
-            $stmt->execute($params);
-
-            echo "Record added successfully!";
-        } catch(PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
-    }
-
-    public function updateRecord($table, $data, $id) {
-        try {
-            $args = array();
-
-            foreach ($data as $key => $value) {
-                $args[] = "$key = ?";
-            }
-
-            $sql = "UPDATE $table SET " . implode(',', $args) . " WHERE id = ?";
-            $stmt = $this->pdo->prepare($sql);
-
-            $params = array_values($data);
-            $params[] = $id;
-            $stmt->execute($params);
-
-            echo "Record updated successfully!";
-        } catch(PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
-    }
-
-    public function deleteRecord($table, $id) {
-        try {
-            $sql = "DELETE FROM $table WHERE id = ?";
-            $stmt = $this->pdo->prepare($sql);
-            
-            $stmt->bindParam(1, $id, PDO::PARAM_INT);
-            $stmt->execute();
-
-            echo "Record deleted successfully!";
-        } catch(PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
-    }
-
-
 
     public function displayArticles() {
         try {
@@ -100,11 +43,9 @@ class Article {
     }
 
     public function addArticle($data) {
-        
         if (!isset($data['slug'])) {
             $data['slug'] = $this->generateSlug($data['title']);
         }
-        
         
         if (!isset($data['status'])) {
             $data['status'] = 'draft';
@@ -112,18 +53,14 @@ class Article {
         
         $this->insertRecord('articles', $data);
     }
-    
 
     public function editArticle($id, $data) {
-        
         if (isset($data['title']) && !isset($data['slug'])) {
             $data['slug'] = $this->generateSlug($data['title']);
         }
         
         $this->updateRecord('articles', $data, $id);
     }
-    
-
 
     public function removeArticle($id) {
         $this->deleteRecord('articles', $id);
@@ -143,14 +80,12 @@ class Article {
             echo "Error: " . $e->getMessage();
         }
     }
-    
-    
+
     public function setCategory($articleId, $categoryId) {
         $data = ['category_id' => $categoryId];
         $this->updateRecord('articles', $data, $articleId);
     }
-    
-    
+
     public function addTag($articleId, $tagId) {
         $data = [
             'article_id' => $articleId,
@@ -158,7 +93,7 @@ class Article {
         ];
         $this->insertRecord('article_tags', $data);
     }
-    
+
     public function removeTag($articleId, $tagId) {
         try {
             $sql = "DELETE FROM article_tags WHERE article_id = ? AND tag_id = ?";
@@ -168,22 +103,12 @@ class Article {
             echo "Error: " . $e->getMessage();
         }
     }
-    
-    
+
     private function generateSlug($title) {
         $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title)));
-        $baseSlug = $slug;
-        $counter = 1;
-        
-        // while ($this->slugExists($slug)) {
-        //     $slug = $baseSlug . '-' . $counter;
-        //     $counter++;
-        // }
-        
         return $slug;
     }
-    
-    
+
     public function displayArticleTags($articleId) {
         try {
             $sql = "SELECT t.* FROM tags t 
@@ -222,8 +147,5 @@ class Article {
             return [];
         }
     }
-
-
-
 }
 ?>

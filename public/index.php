@@ -72,7 +72,7 @@ $articles = $articleObj->displayArticles();
 
 </head>
 
-<body id="page-top">
+<body id="page-top">   
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -176,8 +176,8 @@ $articles = $articleObj->displayArticles();
                     <div class="row">
 
                         <!-- Area Chart -->
-<!-- Content Column -->
-<div class="col-xl-8 col-lg-7">
+ <!-- Content Column -->
+     <div class="col-xl-8 col-lg-7">
     <!-- Top Authors Card -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -280,7 +280,7 @@ $articles = $articleObj->displayArticles();
             <?php endforeach; ?>
         </div>
     </div>
-</div>
+  </div>
 
 
                         <!-- Pie Chart -->
@@ -388,7 +388,7 @@ $articles = $articleObj->displayArticles();
                                 </table>
         </div>
     </div>
-</div>
+   </div>
 
                 </div>
                 <!-- /.container-fluid -->
@@ -446,7 +446,7 @@ $articles = $articleObj->displayArticles();
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
         <!-- Initialize the pie chart -->
-<script>
+   <script>
     // Set new default font family and font color to mimic Bootstrap's default styling
     Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
     Chart.defaults.global.defaultFontColor = '#858796';
@@ -493,7 +493,7 @@ $articles = $articleObj->displayArticles();
             cutoutPercentage: 80,
         },
     });
-</script>
+   </script>
 
     <!-- Page level plugins -->
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
