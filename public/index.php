@@ -13,6 +13,8 @@ $category = new Category($pdo);
 $tag = new Tag($pdo);
 $article = new Article($pdo);
 $top_articles = $article->getTopArticles(5);
+$articleObj = new Article($pdo);
+$articles = $articleObj->displayArticles();
 
 
 // $articles = get_all_articles($mysqli);
@@ -321,15 +323,69 @@ $top_articles = $article->getTopArticles(5);
                     </div>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Recent Articles</h6>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <?php 
-            $articleObj = new Article($pdo);
-            $articleObj->displayArticles(); 
-            ?>
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Recent Articles</h6>
+                                </div>
+                                <div class="card-body">
+                                                        <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Author</th>
+                                            <th>Category</th>
+                                            <th>Tags</th>
+                                            <th>Views</th>
+                                            <th>Created At</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <?php foreach($articles as $article): ?>
+                                            <tr>
+                                                <td>
+                                                    <?= htmlspecialchars($article['title']) ?>
+                                                </td>
+                                                <td><?= htmlspecialchars($article['username']) ?></td>
+                                                <td><?= htmlspecialchars($article['category_name']) ?></td>
+                                                <td>
+                                                    <?php
+                                                    if ($article['tag_name']) {
+                                                        $tags = explode(',', $article['tag_name']);
+                                                        foreach($tags as $tag) {
+                                                            echo '<span class="badge badge-primary mr-1">' . htmlspecialchars($tag) . '</span>';
+                                                        }
+                                                    }
+                                                    ?>
+                                                </td>
+                                                <td data-order="<?= $article['views'] ?>">
+                                                    <?= number_format($article['views']) ?>
+                                                </td>
+                                                <td data-order="<?= strtotime($article['created_at']) ?>">
+                                                    <?= date('M d, Y H:i', strtotime($article['created_at'])) ?>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <a href="view-article.php?id=<?= $article['id'] ?>" 
+                                                        class="btn btn-info btn-sm">
+                                                            <i class="fas fa-eye"></i>
+                                                        </a>
+                                                        <a href="edit-article.php?article_id=<?= $article['id'] ?>" 
+                                                        class="btn btn-primary btn-sm">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+                                                        <a href="delete-article.php?article_id=<?= $article['id'] ?>" 
+                                                        class="btn btn-danger btn-sm">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                        
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
         </div>
     </div>
 </div>

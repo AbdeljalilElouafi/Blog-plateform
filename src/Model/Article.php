@@ -91,71 +91,11 @@ class Article {
                 LEFT JOIN tags t ON at.tag_id = t.id
                 GROUP BY a.id
             ");
-    
-            echo '<div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary"></h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>Title</th>
-                                        <th>Author</th>
-                                        <th>Category</th>
-                                        <th>Tags</th>
-                                        <th>Views</th>
-                                        <th>Created At</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                
-                                <tbody>';
             
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo '<tr>
-                        <td>
-                            
-                            ' . htmlspecialchars($row['title']) . '
-                        </td>
-                        <td>' . htmlspecialchars($row['username']) . '</td>
-                        <td>' . htmlspecialchars($row['category_name']) . '</td>
-                        <td>';
-                
-                if ($row['tag_name']) {
-                    $tags = explode(',', $row['tag_name']);
-                    foreach($tags as $tag) {
-                        echo '<span class="badge badge-primary mr-1">' . htmlspecialchars($tag) . '</span>';
-                    }
-                }
-                
-                echo '</td>
-                        <td data-order="' . $row['views'] . '">' . number_format($row['views']) . '</td>
-                        <td data-order="' . strtotime($row['created_at']) . '">' . 
-                            date('M d, Y H:i', strtotime($row['created_at'])) . '
-                        </td>
-                        <td>
-                            <div class="btn-group">
-                                <a href="view-article.php?id=' . $row['id'] . '" 
-                                   class="btn btn-info btn-sm">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="edit-article.php?article_id=' . $row['id'] . '" class="btn btn-success btn-sm me-2"><i class="fas fa-edit"></i></a>
-                                <a href="delete-article.php?article_id=' . $row['id'] . '" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
-                            </div>
-                        </td>
-                    </tr>';
-            }
-            
-            echo '</tbody>
-                </table>
-                </div>
-                </div>
-                </div>';
-                
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
+            return [];
         }
     }
 
