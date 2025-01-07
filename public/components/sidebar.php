@@ -38,7 +38,7 @@
                 <div id="collapseArticles" class="collapse" aria-labelledby="headingArticles" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Article Management:</h6>
-                        <a class="collapse-item" href="articles.php">View All Articles</a>
+                        <a class="collapse-item" href="../public/view-articles.php">View All Articles</a>
                         <a class="collapse-item" href="../public/add-article.php">Add New Article</a>
                         <a class="collapse-item" href="article-drafts.php">Drafts</a>
                     </div>
@@ -55,7 +55,7 @@
                 <div id="collapseCategories" class="collapse" aria-labelledby="headingCategories" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Category Management:</h6>
-                        <a class="collapse-item" href="categories.php">View All Categories</a>
+                        <a class="collapse-item" href="../public/view-categories.php">View All Categories</a>
                         <a class="collapse-item" href="../public/add-category.php">Add New Category</a>
                     </div>
                 </div>

@@ -10,21 +10,10 @@ class Category extends Crud {
     public function displayCategories() {
         try {
             $stmt = $this->pdo->query("SELECT * FROM categories");
-            if ($stmt->rowCount() > 0) {
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<div class='flex items-center gap-2'>";
-                    echo "<span>Category: " . $row["name"] . "</span>";
-                    echo "<div class='mt-3'>";
-                    echo "<a href='edit-category.php?Category_id=" . $row['id'] . "' class='btn btn-success btn-sm me-2'>Edit</a>";
-                    echo "<a href='delete-category.php?Category_id=" . $row['id'] . "' class='btn btn-danger btn-sm'>Delete</a>";
-                    echo "</div>";
-                    echo "</div>";
-                }
-            } else {
-                echo "No categories found";
-            }
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
+            return [];
         }
     }
 
