@@ -9,7 +9,7 @@ class User extends Crud {
     public $role;
     public $bio;
 
-    
+
     public function register($username, $email, $password) {
         try {
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
@@ -73,4 +73,15 @@ class User extends Crud {
         header('Location: login.php');
         exit();
     }
+
+    public function countUsers() {
+        try {
+            $stmt = $this->pdo->query("SELECT COUNT(*) as count FROM users");
+            return $stmt->fetch(PDO::FETCH_ASSOC)['count'];
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return 0;
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ require_once dirname(__DIR__) . '../config/database.php';
 require_once '../src/Model/Category.php';
 require_once '../src/Model/Tag.php'; 
 require_once '../src/Model/Article.php'; 
+require_once '../src/Model/User.php'; 
 
 
 $db = DatabaseConnection::getInstance();
@@ -11,6 +12,7 @@ $pdo = $db->getPdo();
 
 $category = new Category($pdo);
 $tag = new Tag($pdo);
+$user = new User($pdo);
 $article = new Article($pdo);
 $top_articles = $article->getTopArticles(5);
 $articleObj = new Article($pdo);
@@ -125,7 +127,7 @@ $articles = $articleObj->displayArticles();
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Users</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">phpCode</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $user->countUsers(); ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-users fa-2x text-gray-300"></i>

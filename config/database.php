@@ -2,7 +2,7 @@
 
 use Dotenv\Dotenv;
 
-require '../../vendor1/autoload.php';
+require_once __DIR__ . '/../vendor1/autoload.php';
 
 class DatabaseConnection
 {
