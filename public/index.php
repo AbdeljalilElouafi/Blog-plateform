@@ -17,7 +17,7 @@ $article = new Article($pdo);
 $top_articles = $article->getTopArticles(5);
 $articleObj = new Article($pdo);
 $articles = $articleObj->displayArticles();
-
+$categories = $category->getCategoryStats();
 
 // $articles = get_all_articles($mysqli);
 // $category_stats = get_category_stats($mysqli);
@@ -26,25 +26,24 @@ $articles = $articleObj->displayArticles();
 
 
 // Prepare data for the chart
-// $categories = $category_stats;
-// $categoriesNames = [];
-// $counts = [];
-// // Define colors for the chart
-// $colors = [
-//     'rgb(78, 115, 223)',    // primary
-//     'rgb(28, 200, 138)',    // success
-//     'rgb(54, 185, 204)',    // info
-//     'rgb(246, 194, 62)',    // warning
-//     'rgb(231, 74, 59)',     // danger
-//     'rgb(133, 135, 150)',   // secondary
-//     'rgb(90, 92, 105)',     // dark
-//     'rgb(244, 246, 249)'    // light
-// ];
-// foreach ($categories as $stat) {
-//     $categoriesNames[] = $stat['name'];
-//     $counts[] = $stat['article_count'];
-// }
+$categoriesNames = [];
+$counts = [];
+foreach ($categories as $stat) {
+    $categoriesNames[] = $stat['name'];
+    $counts[] = $stat['article_count'];
+}
 
+// Colors for the pie chart
+$colors = [
+    'rgb(78, 115, 223)',    // primary
+    'rgb(28, 200, 138)',    // success
+    'rgb(54, 185, 204)',    // info
+    'rgb(246, 194, 62)',    // warning
+    'rgb(231, 74, 59)',     // danger
+    'rgb(133, 135, 150)',   // secondary
+    'rgb(90, 92, 105)',     // dark
+    'rgb(244, 246, 249)'    // light
+];
 
 
 ?>

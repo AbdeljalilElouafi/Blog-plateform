@@ -41,6 +41,24 @@ class Category extends Crud {
         }
     }
 
+    public function getCategoryStats() {
+        try {
+            $stmt = $this->pdo->query("
+                SELECT 
+                    c.name,
+                    COUNT(a.id) as article_count
+                FROM categories c
+                JOIN articles a ON c.id = a.category_id
+                GROUP BY c.id, c.name
+                ORDER BY article_count DESC
+            ");
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return [];
+        }
+    }
+
 
 }
 ?>
