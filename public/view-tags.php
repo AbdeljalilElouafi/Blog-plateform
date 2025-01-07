@@ -1,11 +1,11 @@
 <?php
 require_once dirname(__DIR__) . '../config/database.php';
-require_once '../src/Model/Category.php';
+require_once '../src/Model/Tag.php';
 
 $db = DatabaseConnection::getInstance();
 $pdo = $db->getPdo();
-$categoryObj = new Category($pdo);
-$categories = $categoryObj->displayCategories();
+$tagObj = new Tag($pdo);
+$tags = $tagObj->displayTags();
 
 
 ?>
@@ -76,15 +76,15 @@ $categories = $categoryObj->displayCategories();
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach($categories as $category): ?>
+                                            <?php foreach($tags as $tag): ?>
                                                 <tr>
-                                                    <td><?= htmlspecialchars($category['name']) ?></td>
+                                                    <td><?= htmlspecialchars($tag['name']) ?></td>
                                                     <td>
                                                         <div class="btn-group">
-                                                            <a href="edit-category.php?category_id=<?= $category['id'] ?>" class="btn btn-primary btn-sm">
+                                                            <a href="edit-tag.php?tag_id=<?= $tag['id'] ?>" class="btn btn-primary btn-sm">
                                                                 <i class="fas fa-edit"></i>
                                                             </a>
-                                                            <a href="delete-category.php?category_id=<?= $category['id'] ?>" class="btn btn-danger btn-sm">
+                                                            <a href="delete-tag.php?tag_id=<?= $tag['id'] ?>" class="btn btn-danger btn-sm">
                                                                 <i class="fas fa-trash"></i>
                                                             </a>
                                                         </div>

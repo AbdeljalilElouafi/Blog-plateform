@@ -71,7 +71,7 @@
                 <div id="collapseTags" class="collapse" aria-labelledby="headingTags" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Tag Management:</h6>
-                        <a class="collapse-item" href="tags.php">View All Tags</a>
+                        <a class="collapse-item" href="../public/view-tags.php">View All Tags</a>
                         <a class="collapse-item" href="add-tag.php">Add New Tag</a>
                     </div>
                 </div>
