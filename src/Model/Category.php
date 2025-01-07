@@ -41,6 +41,18 @@ class Category extends Crud {
     public function removeCategory($id) {
         $this->deleteRecord('categories', $id);
     }
+
+    public function countCategories() {
+        try {
+            $stmt = $this->pdo->query("SELECT COUNT(*) as count FROM categories");
+            return $stmt->fetch(PDO::FETCH_ASSOC)['count'];
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return 0;
+        }
+    }
+
+
 }
 ?>
 

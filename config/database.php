@@ -8,7 +8,7 @@ class DatabaseConnection
 {
     private $pdo;
     private static $instance = null;  // this private property is used to store the unique instance
-    
+    public static $countInstance = 0;
     
     private function __construct()
     {

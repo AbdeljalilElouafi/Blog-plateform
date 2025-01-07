@@ -40,6 +40,18 @@ class Tag extends Crud {
     public function removeTag($id) {
         $this->deleteRecord('tags', $id);
     }
+
+
+    public function countTags() {
+        try {
+            $stmt = $this->pdo->query("SELECT COUNT(*) as count FROM tags");
+            return $stmt->fetch(PDO::FETCH_ASSOC)['count'];
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return 0;
+        }
+    }
+
 }
 
 

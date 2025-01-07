@@ -107,7 +107,7 @@ $articles = $articleObj->displayArticles();
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Articles</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $article->countArticles(); ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-newspaper fa-2x text-gray-300"></i>
@@ -143,7 +143,7 @@ $articles = $articleObj->displayArticles();
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tags
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800 "><?php $tag->displayTags(); ?></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800 "><?php echo $tag->countTags(); ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-tags fa-2x text-gray-300"></i>
@@ -160,7 +160,7 @@ $articles = $articleObj->displayArticles();
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Categories</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php $category->displayCategories(); ?></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $category->countCategories(); ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-folder fa-2x text-gray-300"></i>

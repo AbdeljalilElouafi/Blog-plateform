@@ -147,5 +147,23 @@ class Article extends Crud {
             return [];
         }
     }
+
+    public function countArticles($status = null) {
+        try {
+            $sql = "SELECT COUNT(*) as count FROM articles";
+            if ($status) {
+                $sql .= " WHERE status = :status";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute(['status' => $status]);
+            } else {
+                $stmt = $this->pdo->query($sql);
+            }
+            return $stmt->fetch(PDO::FETCH_ASSOC)['count'];
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return 0;
+        }
+    }
+    
 }
 ?>
