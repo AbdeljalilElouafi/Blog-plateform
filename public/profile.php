@@ -1,43 +1,20 @@
 <?php
 require_once dirname(__DIR__) . '../config/database.php';
-require_once '../src/Model/Crud.php';
 require_once '../src/Model/Article.php';
-require_once '../src/Model/Category.php';
-require_once '../src/Model/Tag.php';
 require_once '../src/Model/User.php';
 
-// Check if article ID is provided
-if (!isset($_GET['id'])) {
-    // header('Location: index.php');
-    // exit();
-}
-
-// Initialize database connection
 $db = DatabaseConnection::getInstance();
 $pdo = $db->getPdo();
 
-// Create Article instance
-$articleObj = new Article($pdo);
-$categoryObj = new Category($pdo);
-$tagObj = new Tag($pdo);
+User::checkAuth();
+$user = new User($pdo);
+$userId = $_SESSION['user_id'];
+$userData = $user->getCurrentUser();
 
-// Get article data
-$article = $articleObj->getArticleById($_GET['id']);
-
-// If article doesn't exist, redirect to index
-if (!$article) {
-    // header('Location: index.php');
-    // exit();
+if (!$userData) {
+    die("Error loading user data");
 }
 
-// Get related data
-$categories = $categoryObj->displayCategories();
-$tags = $tagObj->displayTags();
-
-// Start the session if not already started
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 ?>
 
 <!DOCTYPE html>
@@ -90,88 +67,49 @@ if (session_status() === PHP_SESSION_NONE) {
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
                     </div>
 
-                    <!-- -------------the form starts here:------------- -->
-                    <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-lg-10">
-            <!-- Article Header -->
-            <div class="card shadow mb-4">
-                <div class="card-body">
-                    <h1 class="card-title mb-3"><?= htmlspecialchars($article['title']) ?></h1>
-                    
-                    <!-- Article Metadata -->
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <div class="metadata">
-                            <span class="text-muted">
-                                <i class="fas fa-user me-1"></i> <?= htmlspecialchars($article['username']) ?>
-                            </span>
-                            <span class="text-muted ms-3">
-                                <i class="fas fa-calendar me-1"></i> <?= date('F j, Y', strtotime($article['created_at'])) ?>
-                            </span>
-                            <span class="text-muted ms-3">
-                                <i class="fas fa-eye me-1"></i> <?= number_format($article['views']) ?> views
-                            </span>
+                    <div class="container py-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="card shadow">
+                                <div class="card-header bg-primary text-white">
+                                    <h3 class="mb-0">Profile Settings</h3>
+                                </div>
+                                <div class="card-body">
+                                    <?php if (isset($success)): ?>
+                                        <div class="alert alert-success"><?php echo $success; ?></div>
+                                    <?php endif; ?>
+                                    <?php if (isset($error)): ?>
+                                        <div class="alert alert-danger"><?php echo $error; ?></div>
+                                    <?php endif; ?>
+
+                                    <form method="POST" action="">
+                                        <div class="mb-3">
+                                            <label class="form-label">Username</label>
+                                            <input type="text" class="form-control" name="username" 
+                                                value="<?php echo htmlspecialchars($userData['username']); ?>" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" class="form-control" name="email" 
+                                                value="<?php echo htmlspecialchars($userData['email']); ?>" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Bio</label>
+                                            <textarea class="form-control" name="bio" rows="3"><?php echo htmlspecialchars($userData['bio']); ?></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <p class="mb-1"><strong>Role:</strong> <?php echo ucfirst($userData['role']); ?></p>
+                                            <small class="text-muted">Role can only be changed by administrators</small>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                        <div class="category">Category: 
-                            <span class="badge badge-secondary mr-1">
-                                <?= htmlspecialchars($article['category_name']) ?>
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- Tags -->
-                    <?php if (!empty($article['tag_name'])): ?>
-                    <div class="mb-4">
-                        Tags:
-                        <?php foreach (explode(',', $article['tag_name']) as $tag): ?>
-                            <span class="badge badge-primary mr-1">
-                                <?= htmlspecialchars(trim($tag)) ?>
-                            </span>
-                        <?php endforeach; ?>
-                    </div>
-                    <?php endif; ?>
-
-                    <!-- Featured Image if exists
-                    <?php if (!empty($article['featured_image'])): ?>
-                    <div class="mb-4">
-                        <img src="<?= htmlspecialchars($article['featured_image']) ?>" 
-                             class="img-fluid rounded" 
-                             alt="<?= htmlspecialchars($article['title']) ?>">
-                    </div> -->
-                    <?php endif; ?>
-
-                    <!-- Article Content -->
-                    <div class="article-content">
-                        <?= nl2br(htmlspecialchars($article['content'])) ?>
                     </div>
                 </div>
-            </div>
 
-            <!-- Navigation -->
-            <div class="d-flex justify-content-between mb-5">
-                <a href="index.php" class="btn btn-outline-primary">
-                    <i class="fas fa-arrow-left me-2"></i>Back to Articles
-                </a>
-                <?php if (isset($_SESSION['user_id']) && ($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'author')): ?>
-                <div>
-                    <a href="add-article.php" class="btn btn-primary me-2">
-                        <i class="fas fa-pen me-1"></i>Create
-                    </a>
-                    <a href="edit-article.php?article_id=<?= $article['id'] ?>" class="btn btn-primary me-2">
-                        <i class="fas fa-edit me-1"></i>Edit
-                    </a>
-  
-
-                    <a href="delete-article.php?article_id=<?= $article['id'] ?>"  class="btn btn-danger"
-                       onclick="return confirm('Are you sure you want to delete this article?')">
-                        <i class="fas fa-trash me-1"></i>Delete
-                    </a>
                 </div>
-                <?php endif; ?>
-            </div>
-        </div>
-    </div>
-</div>
                 <!-- /.container-fluid -->
 
             </div>

@@ -14,10 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                header('Location: ../../public/index.php');
                break;
            case 'author':
-               header('Location: author/dashboard.php');
+               header('Location: ../../public/articles-page.php');
                break;
            default:
-               header('Location: dashboard.php');
+               header('Location: ../../public/articles-page.php');
        }
        exit();
    } else {

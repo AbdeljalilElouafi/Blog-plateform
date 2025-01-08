@@ -84,4 +84,14 @@ class User extends Crud {
         }
     }
 
+    public function getCurrentUser() {
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE id = ?");
+        $stmt->execute([$_SESSION['user_id']]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
+    public function updateProfile($userId, $data) {
+        return $this->updateRecord('users', $data, $userId);
+    }
+
 }
