@@ -29,7 +29,7 @@ class Tag extends Crud {
     public function removeTag($id) {
         $this->deleteRecord('tags', $id);
     }
-
+  
 
     public function countTags() {
         try {
