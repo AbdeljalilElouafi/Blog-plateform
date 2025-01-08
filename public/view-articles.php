@@ -107,7 +107,7 @@ $articles = $articleObj->displayArticles();
                                                 </td>
                                                 <td>
                                                     <div class="btn-group">
-                                                        <a href="view-article.php?id=<?= $article['id'] ?>" 
+                                                        <a href="articles-page.php?id=<?= $article['id'] ?>" 
                                                         class="btn btn-info btn-sm">
                                                             <i class="fas fa-eye"></i>
                                                         </a>
