@@ -160,7 +160,8 @@ if (session_status() === PHP_SESSION_NONE) {
                     <a href="edit-article.php?article_id=<?= $article['id'] ?>" class="btn btn-primary me-2">
                         <i class="fas fa-edit me-1"></i>Edit
                     </a>
-
+  
+                    
                     <a href="delete-article.php?article_id=<?= $article['id'] ?>"  class="btn btn-danger"
                        onclick="return confirm('Are you sure you want to delete this article?')">
                         <i class="fas fa-trash me-1"></i>Delete
