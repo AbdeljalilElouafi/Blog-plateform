@@ -6,7 +6,7 @@ $db = DatabaseConnection::getInstance();
 $pdo = $db->getPdo();
 $userObj = new User($pdo);
 $authors = $userObj->getAuthors();
-User::checkAuth();
+// User::checkAuth();
 ?>
 
 <!DOCTYPE html>
