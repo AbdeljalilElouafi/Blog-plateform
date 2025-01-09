@@ -72,7 +72,7 @@ session_start();
                 </div>
             </div>
         </li>
-
+ 
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTags"
                 aria-expanded="true" aria-controls="collapseTags">
