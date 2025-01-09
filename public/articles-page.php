@@ -18,7 +18,7 @@ $articleObj = new Article($pdo);
 $categoryObj = new Category($pdo);
 $tagObj = new Tag($pdo);
 
-// Get article data
+
 $article = $articleObj->getArticleById($_GET['id']);
 
 if (!$article) {
@@ -30,10 +30,16 @@ if (!$article) {
 $categories = $categoryObj->displayCategories();
 $tags = $tagObj->displayTags();
 
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+if (isset($_GET['id'])) {
+    $article = $articleObj->getArticleById($_GET['id']);
+    
+    // Increment the views when the article is viewed
+    $articleObj->incrementViews($_GET['id']);
 }
+
+// if (session_status() === PHP_SESSION_NONE) {
+//     session_start();
+// }
 ?>
 
 <!DOCTYPE html>
@@ -145,7 +151,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
             <!-- Navigation -->
             <div class="d-flex justify-content-between mb-5">
-                <a href="index.php" class="btn btn-outline-primary">
+                <a href="author-page.php" class="btn btn-outline-primary">
                     <i class="fas fa-arrow-left me-2"></i>Back to Articles
                 </a>
                 <?php if (isset($_SESSION['user_id']) && ($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'author')): ?>

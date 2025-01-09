@@ -190,5 +190,14 @@ class Article extends Crud {
         }
     }
 
+    public function incrementViews($id) {
+        try {
+            $stmt = $this->pdo->prepare("UPDATE articles SET views = views + 1 WHERE id = ?");
+            $stmt->execute([$id]);
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
 }
 ?>
