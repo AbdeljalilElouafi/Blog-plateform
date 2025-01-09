@@ -199,5 +199,30 @@ class Article extends Crud {
         }
     }
 
+    public function getArticlesByStatus($status) {
+        try {
+            $stmt = $this->pdo->prepare("
+                SELECT 
+                    a.*, 
+                    c.name as category_name,
+                    u.username,
+                    GROUP_CONCAT(t.name) as tag_name
+                FROM articles a
+                LEFT JOIN categories c ON a.category_id = c.id 
+                LEFT JOIN users u ON a.author_id = u.id
+                LEFT JOIN article_tags at ON a.id = at.article_id
+                LEFT JOIN tags t ON at.tag_id = t.id
+                WHERE a.status = :status
+                GROUP BY a.id
+            ");
+            $stmt->execute(['status' => $status]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return [];
+        }
+    }
+    
+
 }
 ?>

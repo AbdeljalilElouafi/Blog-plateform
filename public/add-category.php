@@ -2,10 +2,12 @@
 
 require_once '../config/database.php';
 require_once '../src/Model/Category.php';
+require_once '../src/Model/User.php';
+
 
 $db = DatabaseConnection::getInstance();
 $pdo = $db->getPdo();
-
+User::checkAuth();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 

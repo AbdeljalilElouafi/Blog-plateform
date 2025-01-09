@@ -1,11 +1,14 @@
 <?php
 require_once dirname(__DIR__) . '../config/database.php';
 require_once '../src/Model/Tag.php';
+require_once '../src/Model/User.php';
+
 
 $db = DatabaseConnection::getInstance();
 $pdo = $db->getPdo();
 $tagObj = new Tag($pdo);
 $tags = $tagObj->displayTags();
+User::checkAuth();
 
 
 ?>

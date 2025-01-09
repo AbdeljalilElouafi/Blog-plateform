@@ -13,6 +13,7 @@ if (!isset($_GET['id'])) {
 
 $db = DatabaseConnection::getInstance();
 $pdo = $db->getPdo();
+User::checkAuth();
 
 $articleObj = new Article($pdo);
 $categoryObj = new Category($pdo);

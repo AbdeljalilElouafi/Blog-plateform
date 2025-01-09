@@ -38,7 +38,7 @@
                     <h6 class="collapse-header">Article Management:</h6>
                     <a class="collapse-item" href="../public/view-articles.php">View All Articles</a>
                     <a class="collapse-item" href="../public/add-article.php">Add New Article</a>
-                    <a class="collapse-item" href="article-drafts.php">Drafts</a>
+                    <a class="collapse-item" href="../public/article-drafts.php">Drafts</a>
                 </div>
             </div>
         </li>

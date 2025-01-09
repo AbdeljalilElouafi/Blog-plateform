@@ -18,6 +18,8 @@ $top_articles = $article->getTopArticles(5);
 $articleObj = new Article($pdo);
 $articles = $articleObj->displayArticles();
 $categories = $category->getCategoryStats();
+$top_users = $user->getTopAuthors();
+
 User::checkAuth();
 
 // $articles = get_all_articles($mysqli);
@@ -201,14 +203,9 @@ $colors = [
                 <div class="d-flex align-items-center mb-3">
                     <div class="mr-3">
                         <div class="icon-circle bg-primary text-white">
-                            <?php if($user['profile_picture_url']): ?>
-                                <img src="<?= htmlspecialchars($user['profile_picture_url']) ?>" 
-                                     class="rounded-circle" 
-                                     style="width: 40px; height: 40px; object-fit: cover;"
-                                     alt="<?= htmlspecialchars($user['username']) ?>">
-                            <?php else: ?> 
+                            
                                 <i class="fas fa-user"></i>
-                            <?php endif; ?>
+                            
                         </div>
                     </div>
                     <div class="flex-grow-1">

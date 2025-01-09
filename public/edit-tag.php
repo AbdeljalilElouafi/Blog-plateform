@@ -2,10 +2,12 @@
 
 require_once dirname(__DIR__) . '../config/database.php';
 require_once '../src/Model/Tag.php';
+require_once '../src/Model/User.php';
+
 
 $db = DatabaseConnection::getInstance();
 $pdo = $db->getPdo();
-
+User::checkAuth();
 
 if (isset($_GET['tag_id'])) {
     $tag_id = $_GET['tag_id'];

@@ -1,11 +1,13 @@
 <?php
 require_once dirname(__DIR__) . '../config/database.php';
 require_once '../src/Model/Article.php';
+require_once '../src/Model/User.php';
+
 
 $db = DatabaseConnection::getInstance();
 $pdo = $db->getPdo();
 $article = new Article($pdo);
-
+User::checkAuth();
 // to get the article id from the url
 $article_id = isset($_GET['article_id']) ? (int)$_GET['article_id'] : 0;
 

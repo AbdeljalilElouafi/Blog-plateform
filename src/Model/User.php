@@ -21,6 +21,29 @@ class User extends Crud {
         }
     }
 
+    public function getTopAuthors($limit = 3) {
+        try {
+            $sql = "SELECT 
+                        u.id,
+                        u.username,
+                        u.profile_picture_url,
+                        COUNT(a.id) as article_count,
+                        COALESCE(SUM(a.views), 0) as viewsAll
+                    FROM users u
+                    LEFT JOIN articles a ON u.id = a.author_id
+                    WHERE u.role IN ('author', 'admin')
+                    GROUP BY u.id, u.username, u.profile_picture_url
+                    ORDER BY article_count DESC, viewsAll DESC
+                    LIMIT " . (int)$limit;
+                    
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return [];
+        }
+    }
 
     public function register($username, $email, $password) {
         try {

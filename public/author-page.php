@@ -9,6 +9,7 @@ require_once '../src/Model/User.php';
 $db = DatabaseConnection::getInstance();
 $pdo = $db->getPdo();
 
+User::checkAuth();
 $articleObj = new Article($pdo);
 $categoryObj = new Category($pdo);
 $tagObj = new Tag($pdo);
