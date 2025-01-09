@@ -20,7 +20,7 @@ session_start();
     
 
     <hr class="sidebar-divider">
-
+  
     <!-- Content Management - Admin and Author only -->
     <?php if ($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'author'): ?>
         <div class="sidebar-heading">
