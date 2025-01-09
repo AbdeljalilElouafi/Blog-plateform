@@ -22,7 +22,32 @@
     <hr class="sidebar-divider">
   
     <!-- Content Management - Admin and Author only -->
-    <?php if ($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'author'): ?>
+    <?php if ($_SESSION['role'] === 'author'): ?>
+        <div class="sidebar-heading">
+            Content Management
+        </div>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseArticles"
+                aria-expanded="true" aria-controls="collapseArticles">
+                <i class="fas fa-fw fa-newspaper"></i>
+                <span>Articles</span>
+            </a>
+            <div id="collapseArticles" class="collapse" aria-labelledby="headingArticles" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Article Management:</h6>
+                    <a class="collapse-item" href="../public/author-page.php">View All Articles</a>
+                    <a class="collapse-item" href="../public/add-article.php">Add New Article</a>
+                    <!-- <a class="collapse-item" href="../public/article-drafts.php">Drafts</a> -->
+                </div>
+            </div>
+        </li>
+    <?php endif; ?>
+
+    <!-- Admin-only sections -->
+
+    <?php if ($_SESSION['role'] === 'admin'): ?>
+
         <div class="sidebar-heading">
             Content Management
         </div>
@@ -42,11 +67,6 @@
                 </div>
             </div>
         </li>
-    <?php endif; ?>
-
-    <!-- Admin-only sections -->
-
-    <?php if ($_SESSION['role'] === 'admin'): ?>
 
 
         <li class="nav-item <?= basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : '' ?>">
