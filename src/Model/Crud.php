@@ -15,7 +15,7 @@ abstract class Crud {
             $stmt = $this->pdo->prepare($sql);
             $params = array_values($data);
             $stmt->execute($params);
-            echo "Record added successfully!";
+            // echo "Record added successfully!";
         } catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
@@ -32,7 +32,7 @@ abstract class Crud {
             $params = array_values($data);
             $params[] = $id;
             $stmt->execute($params);
-            echo "Record updated successfully!";
+            // echo "Record updated successfully!";
         } catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
@@ -44,7 +44,7 @@ abstract class Crud {
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindParam(1, $id, PDO::PARAM_INT);
             $stmt->execute();
-            echo "Record deleted successfully!";
+            // echo "Record deleted successfully!";
         } catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
         }

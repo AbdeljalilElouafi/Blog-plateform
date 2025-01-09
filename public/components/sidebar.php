@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 ?>
 
 
@@ -105,7 +105,7 @@ session_start();
                     <h6 class="collapse-header">Author Management:</h6>
                     <a class="collapse-item" href="../public/view-authors.php">View All Authors</a>
                     <a class="collapse-item" href="add-author.php">Add New Author</a>
-                    <a class="collapse-item" href="author-roles.php">Manage Roles</a>
+                    <a class="collapse-item" href="../public/manage-roles.php">Manage Roles</a>
                 </div>
             </div>
         </li>

@@ -18,6 +18,7 @@ $top_articles = $article->getTopArticles(5);
 $articleObj = new Article($pdo);
 $articles = $articleObj->displayArticles();
 $categories = $category->getCategoryStats();
+User::checkAuth();
 
 // $articles = get_all_articles($mysqli);
 // $category_stats = get_category_stats($mysqli);

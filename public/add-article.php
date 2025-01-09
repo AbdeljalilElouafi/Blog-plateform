@@ -1,9 +1,13 @@
 <?php
 require_once dirname(__DIR__) . '../config/database.php';
 require_once '../src/Model/Article.php';
+require_once '../src/Model/User.php';
+
 
 $db = DatabaseConnection::getInstance();
 $pdo = $db->getPdo();
+
+User::checkAuth();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 

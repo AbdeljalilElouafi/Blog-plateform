@@ -1,11 +1,13 @@
 <?php
 require_once dirname(__DIR__) . '../config/database.php';
 require_once '../src/Model/Category.php';
+require_once '../src/Model/User.php';
 
 $db = DatabaseConnection::getInstance();
 $pdo = $db->getPdo();
 $categoryObj = new Category($pdo);
 $categories = $categoryObj->displayCategories();
+User::checkAuth();
 
 
 ?>

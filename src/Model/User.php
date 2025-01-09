@@ -7,7 +7,19 @@ class User extends Crud {
     public $username;
     public $email;
     public $role;
-    public $bio;
+    public $bvio;
+
+
+
+    public function getUsers() {
+        try {
+            $stmt = $this->pdo->prepare("SELECT * FROM users ORDER BY id ASC");
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
 
 
     public function register($username, $email, $password) {
@@ -47,6 +59,13 @@ class User extends Crud {
         if ($_SESSION['role'] !== 'admin') {
             return false;
         }
+    
+        
+        $validRoles = ['user', 'author', 'admin']; 
+        if (!in_array($newRole, $validRoles)) {
+            return false;
+        }
+    
         $data = ['role' => $newRole];
         return $this->updateRecord('users', $data, $userId);
     }
@@ -69,7 +88,7 @@ class User extends Crud {
 
     public function logout() {
         // session_start();
-
+        session_unset();
         session_destroy();
         header('Location: login.php');
         exit();
