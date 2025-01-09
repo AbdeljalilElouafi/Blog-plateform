@@ -6,17 +6,14 @@ require_once '../src/Model/Category.php';
 require_once '../src/Model/Tag.php';
 require_once '../src/Model/User.php';
 
-// Check if article ID is provided
 if (!isset($_GET['id'])) {
     // header('Location: index.php');
     // exit();
 }
 
-// Initialize database connection
 $db = DatabaseConnection::getInstance();
 $pdo = $db->getPdo();
 
-// Create Article instance
 $articleObj = new Article($pdo);
 $categoryObj = new Category($pdo);
 $tagObj = new Tag($pdo);
@@ -24,17 +21,16 @@ $tagObj = new Tag($pdo);
 // Get article data
 $article = $articleObj->getArticleById($_GET['id']);
 
-// If article doesn't exist, redirect to index
 if (!$article) {
     // header('Location: index.php');
     // exit();
 }
 
-// Get related data
+
 $categories = $categoryObj->displayCategories();
 $tags = $tagObj->displayTags();
 
-// Start the session if not already started
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }

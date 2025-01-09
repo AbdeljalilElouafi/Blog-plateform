@@ -94,4 +94,20 @@ class User extends Crud {
         return $this->updateRecord('users', $data, $userId);
     }
 
+    public function getAuthors() {
+        try {
+            $stmt = $this->pdo->prepare("
+                SELECT u.*, 
+                       (SELECT COUNT(*) FROM articles WHERE author_id = u.id) as article_count
+                FROM users u 
+                WHERE u.role = 'author' OR u.role = 'admin'
+                ORDER BY u.id DESC
+            ");
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            return [];
+        }
+    }
+
 }
